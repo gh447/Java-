@@ -1,7 +1,7 @@
 public class Merchandise {
     String name;
-    String Id;
+    String Id ;
     int count;
     double price;
+
 }
-                
