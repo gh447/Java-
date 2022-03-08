@@ -1,6 +1,6 @@
 public class ScoreArrayMaxScore {
     public static void main(String[] args) {
-        //声明6个变量，分别代表六门科目成绩的索引
+        //声明6个变量，分别代表六门科目
         int yuwen = 0;
         int shuxue = 1;
         int waiyu = 2;
@@ -13,29 +13,29 @@ public class ScoreArrayMaxScore {
         double[] scores = new double[totalScoreCount];
 
         //每门课的名字
-        String[] scoreNames = new String[totalScoreCount];
-        scoreNames[yuwen] = "语文";
-        scoreNames[shuxue] = "数学";
-        scoreNames[waiyu] = "外语";
-        scoreNames[wuli] = "物理";
-        scoreNames[huaxue] = "化学";
-        scoreNames[shengwu] = "生物";
-
+        String[] ScoreNamre = new String[totalScoreCount];
+        ScoreNamre[yuwen] = "语文";
+        ScoreNamre[shuxue]="数学";
+        ScoreNamre[waiyu]="外语";
+        ScoreNamre[wuli]="物理";
+        ScoreNamre[huaxue]="化学";
+        ScoreNamre[shengwu]="生物";
+        
         //用随机数给成绩赋值
-        for (int i = 0; i < totalScoreCount; i++) {
-            scores[i] = 80 + Math.random() * 20;
-            System.out.println(scoreNames[i] + "的成绩是" + scores[i]);
-        }
+        for (int i = 0;i<totalScoreCount;i++){
+            scores[i]=80+Math.random()*20;
+            System.out.println(ScoreNamre[i]+"的成绩是"+scores[i]);
 
+        }
         double maxScore = 0;
         int maxScoreIndex = -1;
-        for (int i = 0; i < totalScoreCount; i++) {
-            if (scores[i] > maxScore) {
-                maxScore = scores[i];
+
+        for (int i = 0;i<totalScoreCount;i++){
+            if (scores[i]>maxScore){
+                maxScore= scores[i];
                 maxScoreIndex = i;
-            } 
+            }
         }
-        System.out.println("最好成绩科目是" + scoreNames[maxScoreIndex] + ":" + maxScore);
+        System.out.println("最好成绩科目是"+ScoreNamre[maxScoreIndex]+":"+maxScore);
     }
 }
- 
