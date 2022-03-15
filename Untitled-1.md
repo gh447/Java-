@@ -20,7 +20,7 @@ public double cost(int numToBuy){
     return totalCost;
 }
 
-```java
+```
 #### 其中
 
 public是一个访问修饰符。
