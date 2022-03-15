@@ -187,6 +187,8 @@ public class RunLittleSupperMarketAppMainV2 {
 }
 ```
 
+方法里的代码不能改变实参的值
+
 
 
 
