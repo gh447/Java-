@@ -1,6 +1,6 @@
 package com.geekbang.supermarket;
 
-public class MerchandiseV2 {
+public class MerchandiseV2OverLoad {
     public String name;
     public String id;
     public int count;
@@ -22,38 +22,26 @@ public class MerchandiseV2 {
 
     public double calculateProfit() {
         double profit = soldPrice - purchasePrice;
-        if (profit < 0) {
-            return 0;
-        }
+//        if (profit < 0) {
+//            return 0;
+//        }
         return profit;
     }
 
-    //TODO 为了使用方便，买一个传参数
-    public double buyone() {
-        int count = 1;
+    public double buy() {
+        return buy(1);
+    }
+
+    public double buy(int count) {
+        return buy(count, false);
+    }
+
+    public double buy(int count, boolean isVip) {
         if (this.count < count) {
             return -1;
         }
-        this.count--;
-        return soldPrice * count;
-    }
-
-
-    //TODO 买好几个
-    public double buyCount(int count) {
-        if (this.count < count) {
-            return -1;
-        }
-        this.count--;
-        return count * this.soldPrice;
-    }
-
-    public double buyAsVip(int count,boolean isVip){
-        if(this.count<count){
-            return -1;
-        }
-        this.count-=count;
-        double totalCost = soldPrice*count;
+        this.count -= count;
+        double totalCost = count * soldPrice;
         if (isVip){
             return totalCost*0.95;
         }
