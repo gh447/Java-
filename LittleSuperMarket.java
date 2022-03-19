@@ -4,17 +4,19 @@ public class LittleSuperMarket {
     public String superMarketName;
     public String address;
     public int parkingCount;
+    public MerchandiseV2 merchandises[];
+    public int merchandiseSold[];
     public double incomingSum;
-    public MerchandiseV2[] merchandises;
-    public int[] merchandiseSold;
+
 
     /**
      * 初始化小超市
+     *
      * @param superMarketName
      * @param address
      * @param parkingCount
      * @param merchandiseCount 商品种类数
-     * @param count  每种商品缺省库存
+     * @param count            每种商品缺省库存
      */
     public void init(String superMarketName, String address, int parkingCount, int merchandiseCount,
                      int count) {
@@ -78,6 +80,7 @@ public class LittleSuperMarket {
 
     /**
      * 得到利润最高的商品
+     *
      * @return
      */
     public MerchandiseV2 getBiggestProfitMerchandise() {
@@ -129,5 +132,6 @@ public class LittleSuperMarket {
         this.incomingSum -= toBeSpent;
         return true;
     }
+
 
 }
