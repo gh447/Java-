@@ -1,16 +1,16 @@
 package com.geekbang.supermarket;
 
 public class MerchandiseV2 {
-    public String name;
-    public String id;
-    public int count;
-    public double soldPrice;
-    public double purchasePrice;
+    private String name;
+    private String id;
+    private int count;
+    private double soldPrice;
+    private double purchasePrice;
 
     public MerchandiseV2(String name, String id, int count, double soldPrice, double purchasePrice) {
         this.name = name;
-        this.count = count;
         this.id = id;
+        this.count = count;
         this.soldPrice = soldPrice;
         this.purchasePrice = purchasePrice;
     }
@@ -20,13 +20,13 @@ public class MerchandiseV2 {
     }
 
     public MerchandiseV2() {
-        this("无名", "000", 0, 1, 1.1);
+        this("无名", "001", 400, 999, 500);
     }
 
     public void describe() {
-        System.out.println("商品名字是" + name + ",商品id是" + id + ",商品售价是" + soldPrice +
-                ",商品进价是" + purchasePrice + ",商品库存为" + count +
-                "卖出一个的毛利是" + (soldPrice - purchasePrice));
+        System.out.println("商品名字是" + name + ",商品id是" + id + "，商品库存为" + count +
+                "商品进价是" + purchasePrice + ",商品售价是" + soldPrice +
+                "，销售一个的毛利是" + (soldPrice - purchasePrice));
     }
 
     public double calculateProfit() {
@@ -39,10 +39,13 @@ public class MerchandiseV2 {
 
     public double buy(int count) {
         if (this.count < count) {
+            System.out.println("购买失败，库存不足");
             return -1;
         }
-        this.count -= count;
-        return count * soldPrice;
+        this.count-=count;
+        double cost = count*soldPrice;
+        System.out.println("购买成功，花费为"+cost);
+        return cost;
     }
 
     public String getName() {
@@ -61,12 +64,12 @@ public class MerchandiseV2 {
         this.id = id;
     }
 
-    public double getPurchasePrice() {
-        return purchasePrice;
+    public int getCount() {
+        return count;
     }
 
-    public void setPurchasePrice(double purchasePrice) {
-        this.purchasePrice = purchasePrice;
+    public void setCount(int count) {
+        this.count = count;
     }
 
     public double getSoldPrice() {
@@ -77,11 +80,11 @@ public class MerchandiseV2 {
         this.soldPrice = soldPrice;
     }
 
-    public int getCount() {
-        return count;
+    public double getPurchasePrice() {
+        return purchasePrice;
     }
 
-    public void setCount(int count) {
-        this.count = count;
+    public void setPurchasePrice(double purchasePrice) {
+
     }
 }
