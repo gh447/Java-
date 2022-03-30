@@ -1,12 +1,12 @@
 package com.geekbang.supermarket;
 
 public class LittleSuperMarket {
-    private String superMarketName;
-    private String address;
-    private int parkingCount;
-    private double incomingSum;
-    private MerchandiseV2[] merchandise;
-    private int[] merchandiseSold;
+    public String superMarketName;
+    public String address;
+    public int parkingCount;
+    public double incomingSum;
+    public MerchandiseV2[] merchandise;
+    public int[] merchandiseSold;
 
     public LittleSuperMarket(String superMarketName, String address, int parkingCount, int merchandiseCount, int count) {
         this.superMarketName = superMarketName;
@@ -28,12 +28,37 @@ public class LittleSuperMarket {
             } else {
                 double purchasePrice = Math.random() * 200;
                 m = new MerchandiseV2("商品" + i, "id" + i, count,
-                        purchasePrice * (1 + Math.random()), purchasePrice);
+                        1999, 999);
             }
             merchandise[i] = m;
         }
         merchandiseSold = new int[merchandise.length];
     }
+
+    public boolean findMerchandise(MerchandiseV2 target) {
+        int i = 0;
+        for (MerchandiseV2 m : merchandise) {
+            boolean match = m.equals(target);
+//            boolean match = (m == target);
+            if (match) {
+                System.out.println("找到了商品，位置在" + i);
+                return true;
+            }
+            i++;
+        }
+        return false;
+    }
+
+//    public double getBiggestPurchasePrice() {
+//        double maxPurchasePrice = -1;
+//        for (MerchandiseV2 m : merchandise) {
+//            if (m.getPurchasePrice() > maxPurchasePrice) {
+//                maxPurchasePrice = m.getPurchasePrice();
+//            }
+//        }
+//        return maxPurchasePrice;
+//    }
+
     public String getSuperMarketName() {
         return superMarketName;
     }
@@ -96,11 +121,13 @@ public class LittleSuperMarket {
     public void addIncomingSum(double toBeAdded) {
         this.incomingSum = +toBeAdded;
     }
-    public boolean spendMoney(double toBeSpent){
-        if (toBeSpent>incomingSum){
+
+    public boolean spendMoney(double toBeSpent) {
+        if (toBeSpent > incomingSum) {
             return false;
         }
         return true;
     }
+
 
 }
