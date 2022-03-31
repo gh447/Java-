@@ -13,23 +13,18 @@ public class LittleSuperMarket {
         this.address = address;
         this.parkingCount = parkingCount;
 
+        Category[] all = Category.values();
+        int allCategory = all.length;
+
         merchandise = new MerchandiseV2[merchandiseCount];
         for (int i = 0; i < merchandise.length; i++) {
-            MerchandiseV2 m = null;
-            if (i > 0 & i % 100 == 0) {
-                m = new ShellColorChangePhone(
-                        "商品" + i, "id" + i, count, 1999, 999,
-                        4.5, 3.5, 4, 128, "三星", "Android"
-                );
-            } else if (i > 0 & i % 10 == 0) {
-                m = new Phone(
-                        "商品" + i, "id" + i, count, 1999, 999,
-                        4.5, 3.5, 4, 128, "索尼", "Android");
-            } else {
-                double purchasePrice = Math.random() * 200;
-                m = new MerchandiseV2("商品" + i, "id" + i, count,
-                        1999, 999);
-            }
+            double purchasePrice = Math.random() * 200;
+            MerchandiseV2 m = new MerchandiseV2("商品" + i,
+                    "id" + i,
+                    count,
+                    purchasePrice * (1 + Math.random()),
+                    purchasePrice,
+                    all[i % allCategory]);
             merchandise[i] = m;
         }
         merchandiseSold = new int[merchandise.length];
@@ -49,15 +44,15 @@ public class LittleSuperMarket {
         return false;
     }
 
-//    public double getBiggestPurchasePrice() {
-//        double maxPurchasePrice = -1;
-//        for (MerchandiseV2 m : merchandise) {
-//            if (m.getPurchasePrice() > maxPurchasePrice) {
-//                maxPurchasePrice = m.getPurchasePrice();
-//            }
-//        }
-//        return maxPurchasePrice;
-//    }
+    public double getBiggestPurchasePrice() {
+        double maxPurchasePrice = -1;
+        for (MerchandiseV2 m : merchandise) {
+            if (m.getPurchasePrice() > maxPurchasePrice) {
+                maxPurchasePrice = m.getPurchasePrice();
+            }
+        }
+        return maxPurchasePrice;
+    }
 
     public String getSuperMarketName() {
         return superMarketName;
