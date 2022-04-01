@@ -1,39 +1,52 @@
 package com.geekbang.supermarket;
 
+import com.geekbang.supermarket.MerchandiseV2;
+
 public class Phone extends MerchandiseV2 {
     private double screenSize;
     private double cpuHz;
-    private int memoryG;
     private int storageG;
+    private int memoryG;
     private String brand;
     private String os;
+    private static int MAX_BUY_ONE_ORDER = 5;
 
-    public Phone(String name, String id, int count, double soldPrice, double purchasePrice,
-                 double screenSize, double cpuHz, int memoryG, int storageG, String brand, String os) {
+    public Phone(
+            String name, String id, int count, double soldPrice, double purchasePrice,
+            double screenSize, double cpuHz, int memoryG, int storageG, String brand, String os
+    ) {
+        super(name, id, count, purchasePrice * 1.2, purchasePrice);
+        this.storageG = storageG;
         this.screenSize = screenSize;
         this.cpuHz = cpuHz;
         this.memoryG = memoryG;
-        this.storageG = storageG;
         this.brand = brand;
         this.os = os;
-
-        this.setName(name);
-        this.setId(id);
-        this.setCount(count);
-        this.setSoldPrice(soldPrice);
-        this.setPurchasePrice(purchasePrice);
-    }
-    public void describePhone(){
-        System.out.println("此手机属性如下");
-        describe();
-        System.out.println("手机厂商为"+brand+",系统为"+os+",硬件配置如下：\n"+
-                "屏幕"+screenSize+"寸\n"+
-                "cpu主频"+cpuHz+"Hz\n"+
-                "运行内存"+memoryG+"Gb\n"+
-                "储存"+storageG+"Gb");
     }
 
-    public boolean meetCondition(){
+    public double buy(int count) {
+        if (count > MAX_BUY_ONE_ORDER) {
+            System.out.println("购买失败，手机一次最多只能买" + MAX_BUY_ONE_ORDER + "个");
+            return -2;
+        }
+        return super.buy(count);
+    }
+
+//    public String getName() {
+//        return this.brand + ":" + this.os + ":" + super.getName();
+//    }
+
+    public void describe2() {
+        System.out.println("此手机的商品属性如下");
+        super.describe();
+        System.out.println("手机厂商为" + brand + ";系统为" + os + ";硬件配置如下:\n" +
+                "屏幕" + screenSize + "寸\n" +
+                "cpu主频" + cpuHz + "Ghz\n" +
+                "内存" + memoryG + "Gb\n" +
+                "储存空间" + storageG + "Gb\n");
+    }
+
+    public boolean meetCondition() {
         return true;
     }
 
@@ -53,20 +66,20 @@ public class Phone extends MerchandiseV2 {
         this.cpuHz = cpuHz;
     }
 
-    public int getMemoryG() {
-        return memoryG;
-    }
-
-    public void setMemoryG(int memoryG) {
-        this.memoryG = memoryG;
-    }
-
     public int getStorageG() {
         return storageG;
     }
 
     public void setStorageG(int storageG) {
         this.storageG = storageG;
+    }
+
+    public int getMemoryG() {
+        return memoryG;
+    }
+
+    public void setMemoryG(int memoryG) {
+        this.memoryG = memoryG;
     }
 
     public String getBrand() {
