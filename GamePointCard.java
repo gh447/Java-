@@ -1,29 +1,23 @@
 package com.geekbang.supermarket;
 
 import java.util.Date;
+//>>TODO 实现有缺省方法的接口后，面对每个缺省的方法，一个类可以有三种选择
+//>>TODO 1): 默默继承，相当于把这一部分代码拷贝到当前类中
+//>>TODO 2): 重新声明此方法为abstract，相当于把这部分代码拒之门外，但是有abstract的方法必须是抽象的
+//>>TODO 3):覆盖，重新实现
 
-//>>TODO 一个类只能继承一个父类，但是可以实现多个接口
-//>>TODO 如果实现的接口里定义了一样的方法，那么也没问题，但是要求方法名，参数，返回值，类型必须一模一样
-public class GamePointCard extends MerchandiseV2 implements ExpireDateMerchandise, VirtualMerchandise {
+public class GamePointCard extends MerchandiseV2 implements ExpireDateMerchandise, ExpireDateMerchandiseDup, VirtualMerchandise {
     private Date produceDate;
     private Date expirationDate;
 
-    public GamePointCard(String name, String id, int count, double soldPrice, double purchasePrice, Date produceDate
-            , Date expirationDate) {
-        super(name, id, count, soldPrice, purchasePrice);
-        this.produceDate = produceDate;
+    public GamePointCard(String name, String id, int count, double soldPeice, double purchasePrice, Date produceDate, Date expirationDate){
+        super(name,id,count,soldPeice,purchasePrice);
         this.expirationDate = expirationDate;
-    }
-
-    //>>TODO 实现一个类接口，就是从接口继承了抽象方法
-
-    @Override
-    public boolean notExpireInDays(int days) {
-        return daysBeforeExpire() > days;
+        this.produceDate = produceDate;
     }
 
     @Override
-    public Date getProducedDate() {
+    public Date getProduceDate() {
         return produceDate;
     }
 
@@ -33,33 +27,7 @@ public class GamePointCard extends MerchandiseV2 implements ExpireDateMerchandis
     }
 
     @Override
-    public double leftDatePercentage() {
-        return 1.0 * daysBeforeExpire() / (daysBeforeExpire() +daysAfterProduce());
+    public double actualValueNow(double leftDatePecentage) {
+        return super.getSoldPrice();
     }
-
-    @Override
-    public double actualValueNow(double leftDatePercentage) {
-        return soldPrice;
-    }
-
-    private long daysBeforeExpire() {
-        long expireMS = expirationDate.getTime();
-        long left = System.currentTimeMillis() - expireMS;
-        if (left < 0) {
-            return -1;
-        }
-        //>>TODO 返回值是long，是根据left的类型决定的
-        return left / (24 * 3600 * 1000);
-    }
-
-    private long daysAfterProduce() {
-        long expireMs = expirationDate.getTime();
-        long left = System.currentTimeMillis() - expireMs;
-        if (left < 0) {
-            return -1;
-        }
-        return left / (24 * 3600 * 1000);
-    }
-
-
 }

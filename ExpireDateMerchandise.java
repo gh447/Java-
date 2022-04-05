@@ -2,24 +2,59 @@ package com.geekbang.supermarket;
 
 import java.util.Date;
 
-//>>TODO 接口的定义使用interface而非class
-//>>TODO 接口中的方法就是这个类的规范，接口专注于规范，怎么实现这些规范他不管
-//>>TODO 接口无法被实例化，也就是说不能new一个接口的实例
+//>>TODO 缺省的实现方法用default修饰，可以有方法体
 public interface ExpireDateMerchandise {
-    //>>TODO 接口里的方法都是public abstract修饰的，方法有名字，参数和返回值，没有方法体，以分号;结束
-    //>>TODO 接口注释最好写一下
+    /**
+     * 截止到目前商品保质期天数是否超过传递的天数
+     *
+     * @param days 截止到目前，保质期超过这么多天
+     * @return 截止到当前，true如果保质期天数比参数长，false如果保质期不到这么多天
+     */
+    default boolean notExpireInDays(int days) {
+        return daysBeforeExpire() > days;
+    }
 
-    boolean notExpireInDays(int days);
-    //>>TODO 因为接口里的方法都是public abstract修饰，所以这俩修饰符可以省略；
-    //>>TODO abstract就是抽象方法的修饰符，没有方法体，以分号结束；
-    Date getProducedDate();
+    /**
+     * 商品生产日期
+     *
+     * @return
+     */
+    Date getProduceDate();
 
-    public abstract Date getExpireDate();
+    /**
+     * @return
+     */
+    Date getExpireDate();
 
-    double leftDatePercentage();
+    default double leftDatePercentage() {
+        return 1.0 * daysBeforeExpire() / (daysBeforeExpire()+daysAfterProduce());
+    }
 
+    /**
+     * 根据剩余有效期的百分比，得出商品现在实际的价值
+     *
+     * @param leftDatePercentage
+     * @return 剩余的实际的价值
+     */
     double actualValueNow(double leftDatePercentage);
-    //>>TODO 接口里不能定义局部变量，定义的变量默认都是public static final的，这三个修饰符同样可以省略
-    public static final int VAL_IN_INTERFACE = 999;
 
+    //>>TODO 接口里可以有私有的方法，不需要用default修饰
+    //>>TODO 接口里的私有方法，可以认为是代码直接插入到使用的地方
+    private long daysBeforeExpire() {
+        long expireMs = getExpireDate().getTime();
+        long left = expireMs - System.currentTimeMillis();
+        if (left < 0) {
+            return -1;
+        }
+        return left / (24 * 3600 * 1000);
+    }
+
+    private long daysAfterProduce() {
+        long produceMs = getProduceDate().getTime();
+        long left = System.currentTimeMillis() - produceMs;
+        if (left < 0) {
+            return -1;
+        }
+        return left / (04 * 3600 * 1000);
+    }
 }
