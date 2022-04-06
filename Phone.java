@@ -1,122 +1,136 @@
 package com.geekbang.supermarket;
 
+import com.geekbang.supermarket.MerchandiseV2;
+
 public class Phone extends MerchandiseV2 {
     private double screenSize;
-    private CPU cpu;
-    private int memoryG;
+    private double cpuHz;
     private int storageG;
+    private int memoryG;
     private String brand;
     private String os;
+    private double speed;
+    private static int MAX_BUY_ONE_ORDER = 5;
+//TODO 成员内部类，是在类中直接定义类
+//TODO 成员内部类，不可以包含任何静态的成分，比如静态方法，静态变量，静态内部类，否则会造成内外类初始化问题
+//TODO 成员内部类，可以有访问控制符，成员内部类和成员方法，成员变量一样，都是类的组成部分
+    public class CPU {
+        //TODO 可以有final static的基本数据类型变量
+        final static int abc = 999;
 
-    //>>TODO 静态内部类，是在类中使用static修饰的类
-    //>>TODO 静态内部类可以有访问控制符，静态内部类和静态方法，静态变量都一样，都是类的京塔组成部分
-    //>>TODO 静态内部类也是类，在继承实现接口方面都是一样的
-    public static class CPU {
-        private double speed;
         private String producer;
 
-        public CPU(double speed, String producer) {
-            this.speed = speed;
+        public CPU(String producer) {
             this.producer = producer;
         }
 
         public double getSpeed() {
-            //>>TODO 静态内部类，代码和这个类本身权限一样，可以访问外部（Phone）private的属性
-            //>>TODO 注意，这并不是说他可以访问private的变量
-            //>>TODO 静态内部类是静态的，就好像静态方法一样，没有this自引用，可以通过访问Phone对象的private属性
-            //只做演示作用，无实际意义
-            Phone phone = null;
-            phone.memoryG = 99;
-            return speed;
-        }
-
-        public void getSpeed(double Speed) {
-            this.speed = speed;
+            //TODO 成员内部类，代码和这个类本身的访问权限一样，可以访问外部（Phone）的private的属性
+            //TODO 成员内部类中有一个外部类的引用，其访问外部类的对象的成员属性就是使用这份引用，完整写法是：类名.this.属性/方法
+            return Phone.this.speed;
         }
 
         public String getProducer() {
             return producer;
         }
 
-        public void setSpeed(double speed) {
-            this.speed = speed;
-        }
-
         public void setProducer(String producer) {
             this.producer = producer;
         }
 
-        public String toString() {
-            return "CPU{" + "speed = " + speed
-                    + "producer = " + producer + '\'' + '}';
-        }
-        //TODO 静态内部类中可以有任意合法的类的组成部分，包括静态内部类
-//        public static class ABC{
-//
-//        }
-    }
 
-    public void accessStaticClass() {
-        this.cpu.producer = " ";
+        public String toString(){
+            return "CPU"+
+                    "speed="+getSpeed()+",producer = "+
+                    producer+'\''+'}';
+        }
+        //TODO 成员内部类中可以有任何合法的类的组成部分，包括成员内部类，但是不能有静态成分
     }
 
     public Phone(
             String name, String id, int count, double soldPrice, double purchasePrice,
             double screenSize, double cpuHz, int memoryG, int storageG, String brand, String os
     ) {
-        this.screenSize = screenSize;
-        this.cpu = new CPU(cpuHz, "default");
-        this.memoryG = memoryG;
+        super(name, id, count, purchasePrice * 1.2, purchasePrice);
         this.storageG = storageG;
+        this.screenSize = screenSize;
+        this.cpuHz = cpuHz;
+        this.memoryG = memoryG;
         this.brand = brand;
         this.os = os;
-
-        this.setName(name);
-        this.setId(id);
-        this.setCount(count);
-        this.setSoldPrice(soldPrice);
-        this.setPurchasePrice(purchasePrice);
     }
 
-    public void describe() {
-        System.out.println("此手机商品属性如下");
-        describe();
-        System.out.println("手机厂商为" + brand + "系统为" + os + ",硬件配置如下" +
+    public double buy(int count) {
+        if (count > MAX_BUY_ONE_ORDER) {
+            System.out.println("购买失败，手机一次最多只能买" + MAX_BUY_ONE_ORDER + "个");
+            return -2;
+        }
+        return super.buy(count);
+    }
+
+//    public String getName() {
+//        return this.brand + ":" + this.os + ":" + super.getName();
+//    }
+
+    public void describe2() {
+        System.out.println("此手机的商品属性如下");
+        super.describe();
+        System.out.println("手机厂商为" + brand + ";系统为" + os + ";硬件配置如下:\n" +
                 "屏幕" + screenSize + "寸\n" +
-                "cpu信息" + cpu + "\n" +
-                "内存"+memoryG+"Gb\n"+
-                "储存"+storageG+"Gb");
+                "cpu主频" + cpuHz + "Ghz\n" +
+                "内存" + memoryG + "Gb\n" +
+                "储存空间" + storageG + "Gb\n");
     }
 
-}
-//>>TODO 非共有类和静态内部类实际区别就在于能否访问类的private变量
-class Memory{
-    private long capacity;
-    private String producer;
-
-    public Memory(long capacity,String producer){
-        this.capacity = capacity;
-        this.producer = producer;
-    }
-    public void test(){
-        //>>TODO 在类外面的代码不能访问类的private成员
-//        Phone ph = null;
-//        ph.screenSize = 9
+    public boolean meetCondition() {
+        return true;
     }
 
-    public long getCapacity() {
-        return capacity;
+    public double getScreenSize() {
+        return screenSize;
     }
 
-    public void setCapacity(long capacity) {
-        this.capacity = capacity;
+    public void setScreenSize(double screenSize) {
+        this.screenSize = screenSize;
     }
 
-    public String getProducer() {
-        return producer;
+    public double getCpuHz() {
+        return cpuHz;
     }
 
-    public void setProducer(String producer) {
-        this.producer = producer;
+    public void setCpuHz(double cpuHz) {
+        this.cpuHz = cpuHz;
+    }
+
+    public int getStorageG() {
+        return storageG;
+    }
+
+    public void setStorageG(int storageG) {
+        this.storageG = storageG;
+    }
+
+    public int getMemoryG() {
+        return memoryG;
+    }
+
+    public void setMemoryG(int memoryG) {
+        this.memoryG = memoryG;
+    }
+
+    public String getBrand() {
+        return brand;
+    }
+
+    public void setBrand(String brand) {
+        this.brand = brand;
+    }
+
+    public String getOs() {
+        return os;
+    }
+
+    public void setOs(String os) {
+        this.os = os;
     }
 }
