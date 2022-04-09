@@ -1,34 +1,33 @@
-package com.geekbang.supermarket;
+package com.geekbang.supermarket.interfaces;
 
-//TODO 使用enum而非class声明
 public enum Category {
-    //>>TODO 必须在开始时，以这种形式，创建所有枚举对象
-    FOOD(1),
-    //TODO 不可以重名
-    COOK(3),
-    SNACK(5),
-    CLOTHES(7),
-    ELECTRIC(9);
+    FOOD(10,30),
+    COOK(200,2000),
+    SNACK(5,100),
+    CLOTHES(200,1000),
+    ELECTRIC(200,10000);
 
-    //可以有属性
-    private int id;
+    int lowerPrice;
+    int higherPrice;
 
-    //>>TODO 构造方法必须是private的，不写也是private的
-    Category(int id) {
-        this.id = id;
+    Category(int lowerPrice,int higherPrice){
+        this.higherPrice = higherPrice;
+        this.lowerPrice = lowerPrice;
     }
 
-    public int getId() {
-        return id;
+    public int getLowerPrice() {
+        return lowerPrice;
     }
 
-//    public void setId(int id) {
-//        this.id = id;
-//    }
+    public void setLowerPrice(int lowerPrice) {
+        this.lowerPrice = lowerPrice;
+    }
 
-    public String toString() {
-        return "Category{" + "id=" + id + "}";
+    public int getHigherPrice() {
+        return higherPrice;
+    }
+
+    public void setHigherPrice(int higherPrice) {
+        this.higherPrice = higherPrice;
     }
 }
-
-

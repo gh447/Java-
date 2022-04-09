@@ -1,7 +1,18 @@
-public class Merchandise {
-    public String name;
-    public String Id;
-    public double soldPrice;
-    public double purchasePrice;//售价
-    public int count;
+package com.geekbang.supermarket.interfaces;
+
+public interface Merchandise {
+    String getName();
+
+    double getSoldPrice();
+
+    double getPurchasePrice();
+
+    int buy(int count);
+
+    void putBack(int count);
+
+    Category getCategory();
+
+    int getCount();
+
 }
